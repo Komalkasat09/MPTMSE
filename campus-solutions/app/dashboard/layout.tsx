@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Users, Calendar, Settings, LogOut, ChevronRight, Menu, X, User, Wrench, MessageCircle } from "lucide-react";
+import { Home, Users, Calendar, Settings, LogOut, ChevronRight, Menu, X, User, Wrench, MessageCircle, TrophyIcon } from "lucide-react";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useState } from "react";
 
@@ -43,7 +43,7 @@ const navigationItems = [
     href: "/dashboard/attendance",
     icon: Calendar,
     label: "Attendance",
-    description: "Apply for Attendance and Sick Leave schedule and events"
+    description: "Track attendance and leave requests"
   },
   {
     href: "/dashboard/profile",
@@ -55,15 +55,20 @@ const navigationItems = [
     href: "/dashboard/tasks",
     icon: Wrench,
     label: "Tasks",
-    description: "Do your tasks and get feedback"
+    description: "Complete assignments and view feedback"
   },
   {
     href: "/dashboard/chat",
     icon: MessageCircle,
     label: "Chat",
-    description: "Chat with team members"
+    description: "Communicate with team members"
+  },
+  {
+    href: "/dashboard/achievements",
+    icon: TrophyIcon,
+    label: "Achievements",
+    description: "View accomplishments and milestones"
   }
-  
 ];
 
 export default function DashboardLayout({

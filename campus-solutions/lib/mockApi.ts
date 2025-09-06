@@ -8,6 +8,7 @@ import initialApplications from '../data/applications.json';
 import initialSickLeaves from '../data/sickLeaves.json';
 import initialChannels from '../data/channels.json';
 import initialMessages from '../data/messages.json';
+import initialAchievements from '../data/achievements.json';
 
 
 const getFromStorage = (key: string, initialData: any[]) => {
@@ -268,4 +269,28 @@ sendMessage: (messageData:
         }, 300); // Simulate network latency
     });
 },
+    getCollegeAchievements: (): Promise<any[]> => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const achievements = getFromStorage('achievements', initialAchievements);
+          const users = getFromStorage('users', initialUsers);
+
+          // Enrich each achievement with the student's name and branch
+          const enrichedAchievements = achievements
+            .filter((ach: any) => ach.approved) // Only show approved achievements
+            .map((achievement: any) => {
+              const student = users.find((user: any) => user.id === achievement.studentId);
+              return {
+                ...achievement,
+                studentName: student ? student.name : 'Unknown Student',
+                studentBranch: student ? student.branch : 'N/A',
+              };
+            })
+            // Sort by most recent date first
+            .sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+          resolve(enrichedAchievements);
+        }, 600);
+      });
+    },
 };
