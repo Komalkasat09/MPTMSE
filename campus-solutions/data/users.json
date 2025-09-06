@@ -1,5 +1,66 @@
 [
-  { "id": "student-1", "role": "student", "name": "Vidhi Shah", "sapId": "SAP123456", "email": "vidhi@college.edu", "password": "password123", "branch": "Computer Science", "year": 3, "phone": "+91-9876543210", "linkedin": "https://linkedin.com/in/vidhi", "github": "https://github.com/vidhi", "resumeUrl": "/resumes/vidhi_resume.pdf", "interests": ["AI", "Web Dev"], "skills": ["Python", "React", "Next.js"] },
-  { "id": "faculty-1", "role": "faculty", "name": "Dr. Mehta", "email": "mehta@college.edu", "password": "password123", "branch": "Computer Science", "designation": "Associate Professor" },
-  { "id": "committee-1", "role": "committee", "name": "Tech Club", "email": "techclub@college.edu", "password": "password123", "branch": "Computer Science", "designation": "Core Committee" }
+  {
+    "id": "student-1",
+    "role": "student",
+    "name": "Vidhi Shah",
+    "sapId": "SAP123456",
+    "email": "vidhi@college.edu",
+    "password": "password123",
+    "branch": "Computer Science",
+    "year": 3,
+    "phone": "+91-9876543210",
+    "linkedin": "https://linkedin.com/in/vidhi",
+    "github": "https://github.com/vidhi",
+    "resumeUrl": "/resumes/vidhi_resume.pdf",
+    "bio": "Aspiring full-stack developer with a passion for AI and open-source projects.",
+    "interests": ["AI", "Web Dev", "Open Source"],
+    "skills": ["Python", "React", "Next.js", "TensorFlow"],
+    "achievements": [
+      { "type": "Hackathon", "title": "Won Smart India Hackathon 2024" },
+      { "type": "Internship", "title": "Summer Intern at Google" }
+    ],
+    "applications": ["task-1"],
+    "attendance": [
+      { "eventId": "event-1", "status": "approved" },
+      { "sickLeaveId": "sick-1", "status": "pending" }
+    ]
+  },
+  {
+    "id": "student-2",
+    "role": "student",
+    "name": "Kavish Shah",
+    "sapId": "SAP654321",
+    "email": "kavish@college.edu",
+    "password": "password123",
+    "branch": "Information Technology",
+    "year": 2,
+    "phone": "+91-9123456789",
+    "linkedin": "https://linkedin.com/in/kavish",
+    "github": "https://github.com/kavish",
+    "resumeUrl": null,
+    "bio": "Enthusiastic about competitive programming and backend systems.",
+    "interests": ["DSA", "Backend", "Cloud"],
+    "skills": ["C++", "Java", "Node.js", "AWS"],
+    "achievements": [],
+    "applications": [],
+    "attendance": []
+  },
+  {
+    "id": "faculty-1",
+    "role": "faculty",
+    "name": "Dr. Mehta",
+    "email": "mehta@college.edu",
+    "password": "password123",
+    "branch": "Computer Science",
+    "designation": "Associate Professor"
+  },
+  {
+    "id": "committee-1",
+    "role": "committee",
+    "name": "Tech Club",
+    "email": "techclub@college.edu",
+    "password": "password123",
+    "branch": "Computer Science",
+    "description": "The official student-run technical society for Machine Learning, Web Development, and all things code."
+  }
 ]

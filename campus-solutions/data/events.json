@@ -1,5 +1,41 @@
 [
-  { "id": "event-1", "title": "Hackathon 2025 Kick-off", "committeeId": "committee-1", "category": "Hackathon", "color": "#FB8C00", "start": "2025-10-10T09:00:00", "end": "2025-10-10T11:00:00", "venue": "Main Auditorium" },
-  { "id": "event-2", "title": "Startup Pitch Competition", "committeeId": "committee-2", "category": "Competition", "color": "#43A047", "start": "2025-10-15T14:00:00", "end": "2025-10-15T17:00:00", "venue": "Seminar Hall A" },
-  { "id": "event-3", "title": "Tech Club Recruitment Drive", "committeeId": "committee-1", "category": "Recruitment", "color": "#8E24AA", "start": "2025-10-12T10:00:00", "end": "2025-10-12T16:00:00", "venue": "Library Foyer" }
+  {
+    "id": "event-1",
+    "title": "Hackathon 2025 Kick-off",
+    "committeeId": "committee-1",
+    "category": "Hackathon",
+    "description": "Join us for the opening ceremony of our annual hackathon. Keynote speakers and problem statements will be revealed.",
+    "color": "#FB8C00",
+    "start": "2025-10-10T09:00:00",
+    "end": "2025-10-10T11:00:00",
+    "venue": "Main Auditorium",
+    "slots": 200,
+    "attendees": ["student-1"]
+  },
+  {
+    "id": "event-2",
+    "title": "Startup Pitch Competition",
+    "committeeId": "committee-2",
+    "category": "Competition",
+    "description": "Pitch your startup idea to a panel of venture capitalists and industry experts. Exciting prizes to be won!",
+    "color": "#43A047",
+    "start": "2025-10-15T14:00:00",
+    "end": "2025-10-15T17:00:00",
+    "venue": "Seminar Hall A",
+    "slots": 50,
+    "attendees": []
+  },
+  {
+    "id": "event-3",
+    "title": "Tech Club Recruitment Drive",
+    "committeeId": "committee-1",
+    "category": "Recruitment",
+    "description": "Looking for passionate developers and designers to join our core team. Come talk to us and show us your projects!",
+    "color": "#8E24AA",
+    "start": "2025-10-12T10:00:00",
+    "end": "2025-10-12T16:00:00",
+    "venue": "Library Foyer",
+    "slots": 100,
+    "attendees": []
+  }
 ]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sick-1",
+    "studentId": "student-1",
+    "startDate": "2025-09-20",
+    "endDate": "2025-09-21",
+    "reason": "Fever and cold.",
+    "proofUrl": "/proof/medical_cert.pdf",
+    "status": "pending",
+    "facultyApproverId": "faculty-1"
+  }
+]
