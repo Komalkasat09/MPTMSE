@@ -1,0 +1,4 @@
+[
+  { "id": "task-1", "title": "ML Research Assistants", "description": "Work on dataset cleaning and model pre-processing for an upcoming research paper. This role requires a strong understanding of Python and the Pandas library.", "postedBy": "faculty-1", "slots": 4, "eligibility": { "minCgpa": 7.5, "years": [3, 4], "skills": ["Python", "Pandas", "ML"] } },
+  { "id": "task-2", "title": "Frontend Dev for College Fest", "description": "Design and build the official website for the upcoming annual college festival. Must be proficient in React and Tailwind CSS.", "postedBy": "committee-1", "slots": 2, "eligibility": { "minCgpa": 0, "years": [2, 3, 4], "skills": ["React", "Next.js", "Tailwind CSS"] } }
+]

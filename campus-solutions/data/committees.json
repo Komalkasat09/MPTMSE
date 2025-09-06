@@ -1,0 +1,4 @@
+[
+  { "id": "committee-1", "name": "Tech Club", "branch": "Computer Science", "description": "The official student-run technical society for Machine Learning, Web Development, and all things code.", "logoUrl": "/logos/tech_club.png", "coreMembers": [ { "name": "Anita Sharma", "role": "President" }, { "name": "Raj Patel", "role": "Vice President" } ], "facultyCoordinatorId": "faculty-1" },
+  { "id": "committee-2", "name": "Entrepreneurship Cell", "branch": "All Branches", "description": "Fostering the spirit of innovation and entrepreneurship on campus through workshops, competitions, and speaker sessions.", "logoUrl": "/logos/e_cell.png", "coreMembers": [ { "name": "Priya Singh", "role": "Head" }, { "name": "Amit Kumar", "role": "Co-Head" } ], "facultyCoordinatorId": "faculty-2" }
+]

@@ -1,0 +1,5 @@
+[
+  { "id": "student-1", "role": "student", "name": "Vidhi Shah", "sapId": "SAP123456", "email": "vidhi@college.edu", "password": "password123", "branch": "Computer Science", "year": 3, "phone": "+91-9876543210", "linkedin": "https://linkedin.com/in/vidhi", "github": "https://github.com/vidhi", "resumeUrl": "/resumes/vidhi_resume.pdf", "interests": ["AI", "Web Dev"], "skills": ["Python", "React", "Next.js"] },
+  { "id": "faculty-1", "role": "faculty", "name": "Dr. Mehta", "email": "mehta@college.edu", "password": "password123", "branch": "Computer Science", "designation": "Associate Professor" },
+  { "id": "committee-1", "role": "committee", "name": "Tech Club", "email": "techclub@college.edu", "password": "password123", "branch": "Computer Science", "designation": "Core Committee" }
+]
