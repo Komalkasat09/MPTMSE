@@ -1,10 +1,46 @@
 [
   { "id": "msg-1", "channelId": "channel-1", "authorId": "student-1", "content": "Hey everyone, is the library open late this weekend for exam prep?", "timestamp": "2025-10-15T10:00:00Z" },
   { "id": "msg-2", "channelId": "channel-1", "authorId": "student-2", "content": "Yeah, I heard it's open until midnight on both Saturday and Sunday.", "timestamp": "2025-10-15T10:01:30Z" },
-  { "id": "msg-3", "channelId": "channel-2", "authorId": "committee-tech", "content": "📢 Heads up, everyone! Our first workshop on 'Intro to Next.js 15' is scheduled for next Friday. Sign-up link will be posted soon!", "timestamp": "2025-10-16T11:30:00Z" },
-  { "id": "msg-4", "channelId": "channel-3", "authorId": "committee-trinity", "content": "Looking for volunteers for the upcoming cultural fest! DM me if you're interested in helping out with stage management.", "timestamp": "2025-10-16T12:00:00Z" },
-  { "id": "msg-5", "channelId": "channel-1", "authorId": "faculty-1", "content": "A reminder to all third-year students: your project proposals are due by the end of this week.", "timestamp": "2025-10-17T09:00:00Z" },
-  { "id": "msg-6", "channelId": "dm-vidhi-kavish", "authorId": "student-1", "content": "Hey Kavish, did you manage to solve that tricky DSA problem from yesterday's lecture?", "timestamp": "2025-10-17T14:00:00Z" },
-  { "id": "msg-7", "channelId": "dm-vidhi-kavish", "authorId": "student-2", "content": "Not yet, I'm still stuck on the recursion part. Want to work on it together in the library later?", "timestamp": "2025-10-17T14:05:00Z" },
-  { "id": "msg-8", "channelId": "dm-vidhi-kavish", "authorId": "student-1", "content": "Sounds good! See you there around 4 PM.", "timestamp": "2025-10-17T14:06:00Z" }
+  { "id": "msg-3", "channelId": "channel-1", "authorId": "faculty-1", "content": "That's correct! Extra study spaces have been arranged in the main hall as well.", "timestamp": "2025-10-15T10:02:00Z" },
+  { "id": "msg-4", "channelId": "channel-1", "authorId": "student-1", "content": "Perfect! Thanks for confirming.", "timestamp": "2025-10-15T10:02:30Z", "reactions": [{"emoji": "👍", "users": ["student-2", "faculty-1"], "count": 2}] },
+  { "id": "msg-5", "channelId": "channel-1", "authorId": "student-2", "content": "Does anyone know if the cafeteria will be open late too?", "timestamp": "2025-10-15T10:03:00Z" },
+  { "id": "msg-6", "channelId": "channel-1", "authorId": "faculty-1", "content": "The cafeteria closes at 9 PM as usual, but vending machines will be stocked.", "timestamp": "2025-10-15T10:03:30Z" },
+  
+  { "id": "msg-7", "channelId": "channel-2", "authorId": "committee-tech", "content": "📢 Heads up, everyone! Our first workshop on 'Intro to Next.js 15' is scheduled for next Friday. Sign-up link will be posted soon!", "timestamp": "2025-10-16T11:30:00Z" },
+  { "id": "msg-8", "channelId": "channel-2", "authorId": "student-1", "content": "Excited for this! Will there be any prerequisites?", "timestamp": "2025-10-16T11:35:00Z" },
+  { "id": "msg-9", "channelId": "channel-2", "authorId": "committee-tech", "content": "Basic React knowledge would be helpful, but we'll cover the fundamentals too!", "timestamp": "2025-10-16T11:40:00Z", "reactions": [{"emoji": "🚀", "users": ["student-1"], "count": 1}] },
+  {
+    "id": "msg-10",
+    "channelId": "channel-2",
+    "authorId": "committee-tech",
+    "content": "Here's the official poster for the event!",
+    "timestamp": "2025-10-18T15:00:00Z",
+    "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop&auto=format",
+    "reactions": [{"emoji": "🔥", "users": ["student-1"], "count": 1}, {"emoji": "👀", "users": ["student-2"], "count": 1}]
+  },
+  
+  { "id": "msg-11", "channelId": "channel-3", "authorId": "committee-trinity", "content": "Looking for volunteers for the upcoming cultural fest! DM me if you're interested in helping out with stage management.", "timestamp": "2025-10-16T12:00:00Z" },
+  { "id": "msg-12", "channelId": "channel-3", "authorId": "student-1", "content": "I'd love to help! What are the time commitments?", "timestamp": "2025-10-16T12:05:00Z" },
+  { "id": "msg-13", "channelId": "channel-3", "authorId": "student-2", "content": "Same here! Count me in.", "timestamp": "2025-10-16T12:06:00Z" },
+  { "id": "msg-14", "channelId": "channel-3", "authorId": "committee-trinity", "content": "Amazing! It's mainly during event days (3 days) and a couple of rehearsal sessions. I'll send you both the detailed schedule.", "timestamp": "2025-10-16T12:10:00Z", "reactions": [{"emoji": "🎭", "users": ["student-1", "student-2"], "count": 2}] },
+  
+  { "id": "msg-15", "channelId": "dm-vidhi-kavish", "authorId": "student-1", "content": "Hey Kavish, did you manage to solve that tricky DSA problem from yesterday's lecture?", "timestamp": "2025-10-17T14:00:00Z" },
+  { "id": "msg-16", "channelId": "dm-vidhi-kavish", "authorId": "student-2", "content": "Not yet, I'm still stuck on the recursion part. Want to work on it together in the library later?", "timestamp": "2025-10-17T14:05:00Z" },
+  { "id": "msg-17", "channelId": "dm-vidhi-kavish", "authorId": "student-1", "content": "Sounds good! See you there around 4 PM.", "timestamp": "2025-10-17T14:06:00Z" },
+  { "id": "msg-18", "channelId": "dm-vidhi-kavish", "authorId": "student-2", "content": "Perfect! I'll bring my notes and we can debug it step by step.", "timestamp": "2025-10-17T14:07:00Z" },
+  {
+    "id": "msg-19",
+    "channelId": "dm-vidhi-kavish",
+    "authorId": "student-1",
+    "content": "Here's the algorithm I was working on:",
+    "timestamp": "2025-10-17T14:10:00Z",
+    "imageUrl": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=300&fit=crop&auto=format",
+    "reactions": [{"emoji": "🤔", "users": ["student-2"], "count": 1}]
+  },
+  { "id": "msg-20", "channelId": "dm-vidhi-kavish", "authorId": "student-2", "content": "Oh I see the issue! The base case needs to be adjusted.", "timestamp": "2025-10-17T14:12:00Z", "reactions": [{"emoji": "💡", "users": ["student-1"], "count": 1}] },
+  
+  { "id": "msg-21", "channelId": "channel-1", "authorId": "faculty-1", "content": "A reminder to all third-year students: your project proposals are due by the end of this week.", "timestamp": "2025-10-17T09:00:00Z", "reactions": [{"emoji": "📝", "users": ["student-1", "student-2"], "count": 2}] },
+  { "id": "msg-22", "channelId": "channel-1", "authorId": "student-1", "content": "Just submitted mine! 😅", "timestamp": "2025-10-17T09:05:00Z" },
+  { "id": "msg-23", "channelId": "channel-1", "authorId": "student-2", "content": "Still working on the literature review section. Any tips?", "timestamp": "2025-10-17T09:10:00Z" },
+  { "id": "msg-24", "channelId": "channel-1", "authorId": "faculty-1", "content": "Focus on recent papers (last 5 years) and make sure to cite properly. Quality over quantity!", "timestamp": "2025-10-17T09:15:00Z", "reactions": [{"emoji": "✅", "users": ["student-2"], "count": 1}] }
 ]

@@ -9,6 +9,7 @@ import initialSickLeaves from '../data/sickLeaves.json';
 import initialChannels from '../data/channels.json';
 import initialMessages from '../data/messages.json';
 
+
 const getFromStorage = (key: string, initialData: any[]) => {
   if (typeof window === 'undefined') return initialData;
   const storedValue = localStorage.getItem(key);
@@ -221,7 +222,14 @@ getMessagesForChannel: (channelId: string): Promise<any[]> => {
     });
 },
 
-sendMessage: (messageData: { channelId: string; authorId: string; content: string }): Promise<{ success: boolean; message: any }> => {
+sendMessage: (messageData: 
+    { channelId: string; 
+        authorId: string; 
+        content: string
+        imageUrl?: string; }):
+         
+        Promise<{ success: boolean; 
+        message: any }> => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const messages = getFromStorage('messages', initialMessages);
@@ -231,6 +239,30 @@ sendMessage: (messageData: { channelId: string; authorId: string; content: strin
                 timestamp: new Date().toISOString()
             };
             messages.push(newMessage);
+            
+            // Check if this should trigger an auto-reply
+            const shouldAutoReply = messageData.channelId === 'dm-vidhi-kavish' && 
+                (messageData.content.toLowerCase().includes('hi') || 
+                 messageData.content.toLowerCase().includes('hello') ||
+                 messageData.content.toLowerCase().includes('hey') ||
+                 messageData.content.toLowerCase().includes('how are you'));
+            
+            if (shouldAutoReply) {
+                // Add auto-reply after a 2-second delay
+                setTimeout(() => {
+                    const updatedMessages = getFromStorage('messages', initialMessages);
+                    const replyMessage = {
+                        id: `msg-${Date.now()}`,
+                        channelId: messageData.channelId,
+                        authorId: 'student-2', // Kavish's ID
+                        content: "Hii! How's it going? 😊",
+                        timestamp: new Date().toISOString()
+                    };
+                    updatedMessages.push(replyMessage);
+                    saveToStorage('messages', updatedMessages);
+                }, 2000); // 2 second delay for auto-reply
+            }
+            
             saveToStorage('messages', messages);
             resolve({ success: true, message: newMessage });
         }, 300); // Simulate network latency

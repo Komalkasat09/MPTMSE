@@ -7,12 +7,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { api } from '@/lib/mockApi';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils"; // shadcn/ui helper for conditional classes
+import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { format } from 'date-fns';
-import { Send, Hash, AtSign, Circle } from 'lucide-react';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
+import { Send, Hash, AtSign, Circle, Smile } from 'lucide-react';
 
 const getInitials = (name: string = "") => {
   const names = name.split(' ');
@@ -30,23 +30,25 @@ export default function ChatPage() {
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const fetchMessages = async (channelId: string) => {
+    const messageData = await api.getMessagesForChannel(channelId);
+    setMessages(messageData);
+  }
 
   useEffect(() => {
     if (user) {
       const fetchInitialData = async () => {
         setIsLoading(true);
         const { channels: allChannels, users: userData } = await api.getChatData(user.id);
-        
-        // Separate channels and DMs
-        const publicChannels = allChannels.filter(c => c.type !== 'dm');
-        const directMessages = allChannels.filter(c => c.type === 'dm');
-        
-        setChannels(publicChannels);
-        setDms(directMessages);
+        setChannels(allChannels.filter(c => c.type !== 'dm'));
+        setDms(allChannels.filter(c => c.type === 'dm'));
         setUsers(userData);
-
-        if (publicChannels.length > 0) {
-          handleChannelSelect(publicChannels[0]);
+        if (allChannels.length > 0) {
+          const initialChannel = allChannels.find(c => c.type !== 'dm') || allChannels[0];
+          setActiveChannel(initialChannel);
+          fetchMessages(initialChannel.id);
         }
         setIsLoading(false);
       };
@@ -54,42 +56,95 @@ export default function ChatPage() {
     }
   }, [user]);
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleChannelSelect = async (channel: any) => {
-    setActiveChannel(channel);
-    setMessages([]);
-    const messageData = await api.getMessagesForChannel(channel.id);
-    setMessages(messageData);
+  // Handle user scrolling to prevent auto-scroll when user is manually scrolling
+  const handleScroll = () => {
+    setIsUserScrolling(true);
+    
+    // Clear existing timeout
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+    
+    // Set timeout to detect when user stops scrolling
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsUserScrolling(false);
+    }, 150);
   };
 
-  const handleSendMessage = async () => {
-    if (!newMessage.trim() || !activeChannel || !user) return;
-    
-    const tempId = `temp-${Date.now()}`;
-    const optimisticMessage = {
-      id: tempId, authorId: user.id, content: newMessage, 
-      timestamp: new Date().toISOString(), isOptimistic: true,
-    };
-    setMessages(prev => [...prev, optimisticMessage]);
-    setNewMessage("");
+  // Poll for new messages every 1 second when there's an active channel
+  useEffect(() => {
+    if (activeChannel) {
+      pollingIntervalRef.current = setInterval(() => {
+        fetchMessages(activeChannel.id);
+      }, 1000);
+    }
 
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
+  }, [activeChannel]);
+
+  useEffect(() => {
+    // Only auto-scroll if user is not manually scrolling
+    if (!isUserScrolling && chatContainerRef.current) {
+      const scrollContainer = chatContainerRef.current;
+      const scrollHeight = scrollContainer.scrollHeight;
+      const clientHeight = scrollContainer.clientHeight;
+      const maxScrollTop = scrollHeight - clientHeight;
+      
+      // Use smooth scrolling for better UX
+      scrollContainer.scrollTo({
+        top: maxScrollTop,
+        behavior: 'smooth'
+      });
+    }
+  }, [messages, isUserScrolling]);
+
+  // Cleanup timeout and polling on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
+  }, []);
+
+  const handleChannelSelect = (channel: any) => {
+    setActiveChannel(channel);
+    fetchMessages(channel.id);
+  };
+  
+  const handleSendMessage = async (content: string) => {
+    if (!content || !content.trim()) return;
+    if (!activeChannel || !user) return;
+
+    setNewMessage(""); // Clear input immediately
     const result = await api.sendMessage({
-      channelId: activeChannel.id, authorId: user.id, content: newMessage
+      channelId: activeChannel.id, authorId: user.id, content
     });
     
+    // Let the polling mechanism handle fetching new messages
+    // This allows the auto-reply delay to work properly
     if (result.success) {
-      setMessages(prev => prev.map(m => m.id === tempId ? result.message : m));
-    } else {
-      setMessages(prev => prev.filter(m => m.id !== tempId));
+      // Immediately fetch to show the user's own message
+      fetchMessages(activeChannel.id);
     }
   };
 
-  const getUserById = (id: string) => users.find(u => u.id === id) || { name: 'Unknown User' };
+  const onEmojiClick = (emojiData: EmojiClickData) => {
+    setNewMessage(prev => prev + emojiData.emoji);
+  };
 
-  // For DMs, get the name of the *other* person
+  const getUserById = (id: string) => users.find(u => u.id === id) || { name: 'Unknown User' };
   const getDmName = (dm: any) => {
     if (!user) return "DM";
     const otherMemberId = dm.members.find((id: string) => id !== user.id);
@@ -100,94 +155,151 @@ export default function ChatPage() {
 
   return (
     <div className="grid md:grid-cols-[280px_1fr] lg:grid-cols-[320px_1fr_280px] h-[calc(100vh-145px)] border rounded-xl overflow-hidden">
-      {/* Left Column: Channels & DMs */}
+      {/* Left Column (Unchanged) */}
       <div className="flex flex-col border-r bg-muted/20">
-        <div className="p-4 border-b"><h2 className="font-semibold">Channels & DMs</h2></div>
-        <ScrollArea className="flex-1">
-          <div className="p-2 space-y-1">
-            <h3 className="px-2 text-xs font-semibold text-muted-foreground uppercase">Committees</h3>
-            {channels.filter(c => c.type === 'committee').map(channel => (
-              <Button key={channel.id} variant={activeChannel?.id === channel.id ? 'secondary' : 'ghost'} className="w-full justify-start gap-2" onClick={() => handleChannelSelect(channel)}>
-                <Hash className="h-4 w-4" /> {channel.name.replace(/-/g, ' ')}
-              </Button>
-            ))}
-            <Separator className="my-2" />
-            <h3 className="px-2 text-xs font-semibold text-muted-foreground uppercase">General</h3>
-            {channels.filter(c => c.type === 'public').map(channel => (
-              <Button key={channel.id} variant={activeChannel?.id === channel.id ? 'secondary' : 'ghost'} className="w-full justify-start gap-2" onClick={() => handleChannelSelect(channel)}>
-                <Hash className="h-4 w-4" /> {channel.name}
-              </Button>
-            ))}
-            <Separator className="my-2" />
-            <h3 className="px-2 text-xs font-semibold text-muted-foreground uppercase">Direct Messages</h3>
-            {dms.map(dm => (
-              <Button key={dm.id} variant={activeChannel?.id === dm.id ? 'secondary' : 'ghost'} className="w-full justify-start gap-2" onClick={() => handleChannelSelect(dm)}>
-                <AtSign className="h-4 w-4" /> {getDmName(dm)}
-              </Button>
-            ))}
-          </div>
-        </ScrollArea>
+        {/* Left sidebar content - keeping it simple for now */}
+        <div className="p-4">
+          <h3 className="font-semibold mb-2">Channels</h3>
+          {channels.map(channel => (
+            <div key={channel.id} className="p-2 hover:bg-muted rounded cursor-pointer" onClick={() => handleChannelSelect(channel)}>
+              #{channel.name}
+            </div>
+          ))}
+          <h3 className="font-semibold mb-2 mt-4">Direct Messages</h3>
+          {dms.map(dm => (
+            <div key={dm.id} className="p-2 hover:bg-muted rounded cursor-pointer" onClick={() => handleChannelSelect(dm)}>
+              {getDmName(dm)}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Middle Column: Chat Window */}
-      <div className="flex flex-col bg-background">
+      {/* Middle Column - Chat Area */}
+      <div className="flex flex-col bg-background min-h-0">
         {activeChannel ? (
           <>
-            <div className="p-4 border-b">
-              <h3 className="font-semibold">{activeChannel.type === 'dm' ? getDmName(activeChannel) : activeChannel.name.replace(/-/g, ' ')}</h3>
-              {activeChannel.type !== 'dm' && <p className="text-sm text-muted-foreground">{activeChannel.description}</p>}
+            {/* Header */}
+            <div className="flex-shrink-0 p-4 border-b">
+              <h2 className="font-semibold">
+                {activeChannel.type === 'dm' ? getDmName(activeChannel) : `#${activeChannel.name}`}
+              </h2>
             </div>
-            <ScrollArea className="flex-1 p-4">
-              <div className="space-y-6">
-                {messages.map(msg => {
+            
+            {/* Messages Container - Enhanced with smooth scrolling and message sticking */}
+            <div 
+              ref={chatContainerRef}
+              className="flex-1 overflow-y-auto p-4 scroll-smooth chat-scrollbar"
+              onScroll={handleScroll}
+              style={{ 
+                height: '100%', 
+                maxHeight: '100%',
+                scrollBehavior: 'smooth',
+                overscrollBehavior: 'contain'
+              }}
+            >
+              <div className="space-y-4 min-h-full flex flex-col justify-end">
+                {messages.map((msg, index) => {
                   const author = getUserById(msg.authorId);
                   const isCurrentUser = author.id === user?.id;
+
                   return (
-                    <div key={msg.id} className={cn("flex items-start gap-3", msg.isOptimistic && "opacity-60", isCurrentUser && "flex-row-reverse")}>
-                      <Avatar className="h-8 w-8"><AvatarFallback>{getInitials(author.name)}</AvatarFallback></Avatar>
-                      <div className={cn("max-w-xs md:max-w-md p-3 rounded-lg", isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
-                        <div className="flex items-center gap-2 mb-1">
+                    <div 
+                      key={msg.id} 
+                      className={cn(
+                        "flex items-start gap-3 animate-in slide-in-from-bottom-2 duration-200",
+                        isCurrentUser && "flex-row-reverse",
+                        "scroll-mt-4" // This helps with scroll positioning
+                      )}
+                      style={{ scrollSnapAlign: 'start' }}
+                    >
+                      <Avatar className="h-8 w-8 flex-shrink-0">
+                        <AvatarFallback>{getInitials(author.name)}</AvatarFallback>
+                      </Avatar>
+                      
+                      <div className={cn(
+                        "max-w-xs md:max-w-md rounded-lg overflow-hidden transition-all duration-200",
+                        isCurrentUser ? "bg-primary text-primary-foreground" : "bg-muted",
+                        "transform-gpu" // Enable hardware acceleration for smoother rendering
+                      )}>
+                        {/* Header with name and time */}
+                        <div className="flex items-center gap-2 px-3 pt-2 pb-1">
                           <span className="font-semibold text-sm">{author.name}</span>
-                          <span className="text-xs opacity-70">{format(new Date(msg.timestamp), 'p')}</span>
+                          <span className="text-xs opacity-70">
+                            {format(new Date(msg.timestamp), 'p')}
+                          </span>
                         </div>
-                        <p className="text-sm leading-snug">{msg.content}</p>
+                        
+                        {/* Message content */}
+                        {msg.content && (
+                          <p className="text-sm leading-snug px-3 pb-2 break-words">{msg.content}</p>
+                        )}
                       </div>
                     </div>
                   );
                 })}
-                <div ref={messagesEndRef} />
+                <div ref={messagesEndRef} className="h-1" />
               </div>
-            </ScrollArea>
-            <div className="p-4 border-t bg-muted/20">
+            </div>
+            
+            {/* Message Input - Fixed at bottom */}
+            <div className="flex-shrink-0 p-4 border-t bg-muted/20">
               <div className="relative">
-                <Input placeholder={`Message ${activeChannel.type === 'dm' ? '' : '#'}${activeChannel.name}`} value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()} className="pr-12" />
-                <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" onClick={handleSendMessage}><Send className="h-4 w-4" /></Button>
+                <Input 
+                  placeholder={`Message ${activeChannel.type === 'dm' ? getDmName(activeChannel) : '#' + activeChannel.name}`} 
+                  value={newMessage} 
+                  onChange={(e) => setNewMessage(e.target.value)} 
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendMessage(newMessage);
+                    }
+                  }} 
+                  className="pr-24" 
+                />
+                <div className="absolute top-1/2 right-1 -translate-y-1/2 flex items-center gap-1">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Smile className="h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 border-none">
+                      <EmojiPicker onEmojiClick={onEmojiClick} />
+                    </PopoverContent>
+                  </Popover>
+                  
+                  <Button 
+                    size="icon" 
+                    className="h-8 w-8" 
+                    onClick={() => handleSendMessage(newMessage)}
+                    disabled={!newMessage.trim()}
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-center h-full text-muted-foreground">Select a channel to start chatting.</div>
+          <div className="flex items-center justify-center h-full text-muted-foreground">
+            Select a channel to start chatting.
+          </div>
         )}
       </div>
 
-      {/* Right Column: Members List */}
+      {/* Right Column (Unchanged) */}
       <div className="hidden lg:flex flex-col border-l bg-muted/20">
-        <div className="p-4 border-b"><h2 className="font-semibold">Members</h2></div>
-        {activeChannel && (
-          <ScrollArea className="flex-1 p-2">
-            <div className="space-y-1">
-            {activeChannel.members.map((memberId: string) => {
-              const member = getUserById(memberId);
-              return (
-                <div key={memberId} className="flex items-center gap-2 p-2 rounded-md">
-                  <Avatar className="h-6 w-6 text-xs"><AvatarFallback>{getInitials(member.name)}</AvatarFallback></Avatar>
-                  <span className="text-sm">{member.name}</span>
-                </div>
-              );
-            })}
+        <div className="p-4">
+          <h3 className="font-semibold mb-2">Online Users</h3>
+          {users.slice(0, 5).map(user => (
+            <div key={user.id} className="flex items-center gap-2 p-2">
+              <Avatar className="h-6 w-6">
+                <AvatarFallback className="text-xs">{getInitials(user.name)}</AvatarFallback>
+              </Avatar>
+              <span className="text-sm">{user.name}</span>
             </div>
-          </ScrollArea>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
