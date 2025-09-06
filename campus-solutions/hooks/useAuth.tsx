@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Check if user session exists in localStorage on initial load
     try {
-      const storedUser = localStorage.getItem('campus-user-session');
+      const storedUser = localStorage.getItem('studenthub-user-session');
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       }
@@ -42,13 +42,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (userData: User) => {
-    localStorage.setItem('campus-user-session', JSON.stringify(userData));
+    localStorage.setItem('studenthub-user-session', JSON.stringify(userData));
     setUser(userData);
     router.push('/dashboard');
   };
 
   const logout = () => {
-    localStorage.removeItem('campus-user-session');
+    localStorage.removeItem('studenthub-user-session');
     setUser(null);
     router.push('/login');
   };

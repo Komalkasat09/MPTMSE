@@ -51,7 +51,7 @@ export default function LoginPage() {
       
       <Card className="w-full max-w-md bg-background/80 backdrop-blur-sm border-white/10">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Campus Solutions</CardTitle>
+          <CardTitle className="text-2xl font-bold">StudentHub</CardTitle>
           <CardDescription>Welcome back! Please sign in to continue.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

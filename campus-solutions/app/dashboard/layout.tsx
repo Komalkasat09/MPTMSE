@@ -114,7 +114,7 @@ export default function DashboardLayout({
             <Home className="h-5 w-5" />
           </div>
           <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-            Campus Solutions
+            StudentHub
           </span>
         </Link>
       </div>

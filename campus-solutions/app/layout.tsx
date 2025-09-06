@@ -10,7 +10,7 @@ import { AuthProvider } from "@/hooks/useAuth"; // Import the AuthProvider
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Campus Solutions",
+  title: "StudentHub",
   description: "A centralized platform for college committees and students.",
 };
 
