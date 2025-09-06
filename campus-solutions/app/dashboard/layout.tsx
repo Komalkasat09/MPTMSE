@@ -192,25 +192,24 @@ export default function DashboardLayout({
         />
       )}
 
-      <div className="grid min-h-screen w-full md:grid-cols-[280px_1fr] lg:grid-cols-[320px_1fr]">
-        {/* Desktop Sidebar */}
-        <div className="hidden border-r border-border/50 bg-card/30 backdrop-blur-sm md:block">
-          <div className="flex h-full max-h-screen flex-col">
-            <SidebarContent />
-          </div>
+      {/* Desktop Sidebar - Fixed Position */}
+      <div className="fixed inset-y-0 left-0 z-50 w-80 border-r border-border/50 bg-card/30 backdrop-blur-sm hidden md:block lg:w-[320px]">
+        <div className="flex h-full max-h-screen flex-col">
+          <SidebarContent />
         </div>
+      </div>
 
-        {/* Mobile Sidebar */}
-        <div className={`fixed inset-y-0 left-0 z-50 w-80 transform border-r border-border/50 bg-card/95 backdrop-blur-lg transition-transform duration-300 ease-in-out md:hidden ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}>
-          <div className="flex h-full max-h-screen flex-col">
-            <SidebarContent />
-          </div>
+      {/* Mobile Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-50 w-80 transform border-r border-border/50 bg-card/95 backdrop-blur-lg transition-transform duration-300 ease-in-out md:hidden ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="flex h-full max-h-screen flex-col">
+          <SidebarContent />
         </div>
-        
-        {/* Main Content Area */}
-        <div className="flex flex-col min-h-screen">
+      </div>
+      
+      {/* Main Content Area - With Left Margin for Fixed Sidebar */}
+      <div className="flex flex-col min-h-screen md:ml-80 lg:ml-[320px]">
           {/* Enhanced Header */}
           <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border/50 bg-card/80 backdrop-blur-lg px-4 lg:h-20 lg:px-8">
             {/* Mobile Menu Button */}
@@ -299,7 +298,6 @@ export default function DashboardLayout({
             </div>
           </main>
         </div>
-      </div>
     </div>
   );
 }
