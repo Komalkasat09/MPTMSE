@@ -48,8 +48,8 @@ const navigationItems = [
   {
     href: "/dashboard/tasks",
     icon: Wrench,
-    label: "Tasks",
-    description: "Complete assignments and view feedback"
+    label: "Applications",
+    description: "Apply for opportunities and positions"
   },
   {
     href: "/dashboard/chat",

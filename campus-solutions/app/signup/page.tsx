@@ -15,6 +15,7 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft } from "lucide-react";
 
 // --- TypeScript Interfaces for Form Data ---
 interface StudentFormData {
@@ -151,6 +152,16 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center min-h-screen p-4">
+      {/* Back Button */}
+      <div className="absolute top-4 left-4">
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+        </Button>
+      </div>
+      
       <Card className="w-full max-w-2xl bg-background/80 backdrop-blur-sm border-white/10">
         <CardHeader>
           <Tabs value={selectedRole} onValueChange={setSelectedRole} className="w-full">

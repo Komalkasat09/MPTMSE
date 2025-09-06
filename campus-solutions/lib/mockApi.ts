@@ -145,6 +145,7 @@ export const api = {
                 return {
                     ...task,
                     postedByName: author ? author.name : 'Unknown',
+                    matchScore: task.matchScore || 0, // Preserve match score
                 };
             });
             resolve(enrichedTasks);

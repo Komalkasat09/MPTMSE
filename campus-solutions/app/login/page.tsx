@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -35,7 +36,19 @@ export default function LoginPage() {
 
   return (
     <main className="flex items-center justify-center min-h-screen p-4">
+      {/* Back Button */}
+      <div className="absolute top-4 left-4">
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+        </Button>
+      </div>
+      
+      {/* Theme Toggle */}
       <div className="absolute top-4 right-4"><ThemeToggle /></div>
+      
       <Card className="w-full max-w-md bg-background/80 backdrop-blur-sm border-white/10">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Campus Solutions</CardTitle>

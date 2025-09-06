@@ -1,0 +1,266 @@
+{
+  "student": {
+    "id": "STU001",
+    "name": "Vidhi Shah",
+    "email": "vidhi.shah@campus.edu",
+    "rollNumber": "CS2024001",
+    "semester": "6th",
+    "department": "Computer Science"
+  },
+  "overview": {
+    "totalClasses": 120,
+    "attendedClasses": 94,
+    "absentClasses": 26,
+    "attendancePercentage": 78.33,
+    "goal": 85,
+    "lecturesNeeded": 8
+  },
+  "monthlyAttendance": [
+    {
+      "month": "January",
+      "totalClasses": 20,
+      "attendedClasses": 18,
+      "percentage": 90
+    },
+    {
+      "month": "February",
+      "totalClasses": 18,
+      "attendedClasses": 16,
+      "percentage": 88.9
+    },
+    {
+      "month": "March",
+      "totalClasses": 22,
+      "attendedClasses": 17,
+      "percentage": 77.3
+    },
+    {
+      "month": "April",
+      "totalClasses": 16,
+      "attendedClasses": 12,
+      "percentage": 75
+    },
+    {
+      "month": "May",
+      "totalClasses": 20,
+      "attendedClasses": 15,
+      "percentage": 75
+    },
+    {
+      "month": "June",
+      "totalClasses": 24,
+      "attendedClasses": 16,
+      "percentage": 66.7
+    }
+  ],
+  "subjectWiseAttendance": [
+    {
+      "subject": "Data Structures",
+      "code": "CS301",
+      "totalClasses": 25,
+      "attendedClasses": 22,
+      "percentage": 88,
+      "color": "#3b82f6"
+    },
+    {
+      "subject": "Database Systems",
+      "code": "CS302",
+      "totalClasses": 20,
+      "attendedClasses": 16,
+      "percentage": 80,
+      "color": "#10b981"
+    },
+    {
+      "subject": "Computer Networks",
+      "code": "CS303",
+      "totalClasses": 22,
+      "attendedClasses": 15,
+      "percentage": 68.2,
+      "color": "#f59e0b"
+    },
+    {
+      "subject": "Software Engineering",
+      "code": "CS304",
+      "totalClasses": 18,
+      "attendedClasses": 14,
+      "percentage": 77.8,
+      "color": "#8b5cf6"
+    },
+    {
+      "subject": "Operating Systems",
+      "code": "CS305",
+      "totalClasses": 20,
+      "attendedClasses": 16,
+      "percentage": 80,
+      "color": "#06b6d4"
+    },
+    {
+      "subject": "Machine Learning",
+      "code": "CS306",
+      "totalClasses": 15,
+      "attendedClasses": 11,
+      "percentage": 73.3,
+      "color": "#ec4899"
+    }
+  ],
+  "weeklyPattern": [
+    {
+      "day": "Monday",
+      "attendanceRate": 85,
+      "totalClasses": 20,
+      "attendedClasses": 17
+    },
+    {
+      "day": "Tuesday",
+      "attendanceRate": 90,
+      "totalClasses": 20,
+      "attendedClasses": 18
+    },
+    {
+      "day": "Wednesday",
+      "attendanceRate": 75,
+      "totalClasses": 20,
+      "attendedClasses": 15
+    },
+    {
+      "day": "Thursday",
+      "attendanceRate": 80,
+      "totalClasses": 20,
+      "attendedClasses": 16
+    },
+    {
+      "day": "Friday",
+      "attendanceRate": 70,
+      "totalClasses": 20,
+      "attendedClasses": 14
+    },
+    {
+      "day": "Saturday",
+      "attendanceRate": 65,
+      "totalClasses": 20,
+      "attendedClasses": 13
+    }
+  ],
+  "testMarks": [
+    {
+      "subject": "Data Structures",
+      "tests": [
+        {
+          "type": "Quiz 1",
+          "marks": 18,
+          "totalMarks": 20,
+          "percentage": 90,
+          "date": "2025-01-15"
+        },
+        {
+          "type": "Mid-term",
+          "marks": 42,
+          "totalMarks": 50,
+          "percentage": 84,
+          "date": "2025-02-28"
+        },
+        {
+          "type": "Quiz 2",
+          "marks": 16,
+          "totalMarks": 20,
+          "percentage": 80,
+          "date": "2025-03-20"
+        }
+      ],
+      "average": 84.7
+    },
+    {
+      "subject": "Database Systems",
+      "tests": [
+        {
+          "type": "Quiz 1",
+          "marks": 17,
+          "totalMarks": 20,
+          "percentage": 85,
+          "date": "2025-01-20"
+        },
+        {
+          "type": "Mid-term",
+          "marks": 38,
+          "totalMarks": 50,
+          "percentage": 76,
+          "date": "2025-03-05"
+        },
+        {
+          "type": "Assignment",
+          "marks": 28,
+          "totalMarks": 30,
+          "percentage": 93.3,
+          "date": "2025-04-10"
+        }
+      ],
+      "average": 84.8
+    },
+    {
+      "subject": "Computer Networks",
+      "tests": [
+        {
+          "type": "Quiz 1",
+          "marks": 14,
+          "totalMarks": 20,
+          "percentage": 70,
+          "date": "2025-01-25"
+        },
+        {
+          "type": "Mid-term",
+          "marks": 35,
+          "totalMarks": 50,
+          "percentage": 70,
+          "date": "2025-03-10"
+        },
+        {
+          "type": "Lab Test",
+          "marks": 22,
+          "totalMarks": 25,
+          "percentage": 88,
+          "date": "2025-04-15"
+        }
+      ],
+      "average": 76
+    }
+  ],
+  "recentActivity": [
+    {
+      "date": "2025-09-06",
+      "subject": "Data Structures",
+      "status": "present",
+      "time": "09:00 AM"
+    },
+    {
+      "date": "2025-09-06",
+      "subject": "Database Systems", 
+      "status": "present",
+      "time": "11:00 AM"
+    },
+    {
+      "date": "2025-09-05",
+      "subject": "Computer Networks",
+      "status": "absent",
+      "time": "02:00 PM"
+    },
+    {
+      "date": "2025-09-05",
+      "subject": "Software Engineering",
+      "status": "present",
+      "time": "10:00 AM"
+    },
+    {
+      "date": "2025-09-04",
+      "subject": "Operating Systems",
+      "status": "present",
+      "time": "01:00 PM"
+    }
+  ],
+  "goals": {
+    "targetAttendance": 85,
+    "currentAttendance": 78.33,
+    "lecturesNeeded": 8,
+    "daysRemaining": 45,
+    "canAchieve": true
+  }
+}

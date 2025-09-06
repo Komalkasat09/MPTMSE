@@ -1,4 +1,4 @@
-// /app/dashboard/tasks/page.tsx
+// /app/dashboard/tasks/page.tsx - Applications Page
 
 "use client";
 
@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from 'sonner';
 import { Briefcase, UserCheck, CheckCircle, Building2, Users, Calendar, Award, Code, SlidersHorizontal } from 'lucide-react';
 
-export default function TasksPage() {
+export default function ApplicationsPage() {
   const { user } = useAuth();
   const [tasks, setTasks] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,9 +53,16 @@ export default function TasksPage() {
                             skillsString.includes(searchTerm.toLowerCase());
       const matchesTaskType = taskTypeFilter === 'all' || task.taskType === taskTypeFilter;
       const matchesBranch = branchFilter === 'all' || branches.includes(branchFilter) || branches.includes("All Branches");
+      
       return matchesSearch && matchesTaskType && matchesBranch;
     });
   }, [tasks, searchTerm, taskTypeFilter, branchFilter]);
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setTaskTypeFilter("all");
+    setBranchFilter("all");
+  };
 
   const handleApplicationSubmit = async () => {
     if (!motivation) return toast.error("Please provide a motivation for your application.");
@@ -89,7 +96,7 @@ export default function TasksPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2"><Label>Search by Keyword</Label><Input placeholder="Title, skill..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /></div>
-            <div className="space-y-2"><Label>Task Type</Label>
+            <div className="space-y-2"><Label>Application Type</Label>
               <Select value={taskTypeFilter} onValueChange={setTaskTypeFilter}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent><SelectItem value="all">All Types</SelectItem><SelectItem value="Research">Research</SelectItem><SelectItem value="Technical">Technical</SelectItem><SelectItem value="Management">Management</SelectItem><SelectItem value="Event Management">Event Management</SelectItem><SelectItem value="Creative">Creative</SelectItem><SelectItem value="Volunteering">Volunteering</SelectItem><SelectItem value="Academic">Academic</SelectItem></SelectContent>
@@ -101,6 +108,14 @@ export default function TasksPage() {
                 <SelectContent><SelectItem value="all">All Branches</SelectItem><SelectItem value="Computer Science">Computer Science</SelectItem><SelectItem value="Information Technology">Information Technology</SelectItem><SelectItem value="Electronics">Electronics</SelectItem></SelectContent>
               </Select>
             </div>
+            <Button 
+              variant="outline" 
+              onClick={clearFilters} 
+              className="w-full mt-4"
+              size="sm"
+            >
+              Clear All Filters
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -109,8 +124,15 @@ export default function TasksPage() {
       <div className="lg:col-span-3">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Tasks & Opportunities</h1>
-            <p className="text-muted-foreground">{filteredTasks.length} opportunities found.</p>
+            <h1 className="text-2xl font-bold tracking-tight">Applications & Opportunities</h1>
+            <p className="text-muted-foreground">{filteredTasks.length} opportunities found out of {tasks.length} total.</p>
+            {(taskTypeFilter !== 'all' || branchFilter !== 'all' || searchTerm) && (
+              <p className="text-xs text-muted-foreground mt-1">
+                Active filters: {taskTypeFilter !== 'all' ? `Type: ${taskTypeFilter}` : ''} 
+                {branchFilter !== 'all' ? ` Branch: ${branchFilter}` : ''} 
+                {searchTerm ? ` Search: "${searchTerm}"` : ''}
+              </p>
+            )}
           </div>
         </div>
         <div className="grid gap-6 md:grid-cols-2 mt-6 animate-in fade-in duration-500">
