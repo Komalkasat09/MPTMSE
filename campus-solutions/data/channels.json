@@ -1,0 +1,6 @@
+[
+  { "id": "channel-1", "name": "general", "description": "General campus-wide announcements and discussions.", "type": "public", "members": ["student-1", "student-2", "faculty-1"] },
+  { "id": "channel-2", "name": "tech-club-announcements", "description": "Official announcements from the Tech Club.", "type": "committee", "committeeId": "committee-tech", "members": ["student-1"] },
+  { "id": "channel-3", "name": "trinity-events", "description": "Planning and discussion for Trinity Club events.", "type": "committee", "committeeId": "committee-trinity", "members": ["student-1", "student-2"] },
+  { "id": "dm-vidhi-kavish", "name": "Kavish Shah", "type": "dm", "members": ["student-1", "student-2"] }
+]

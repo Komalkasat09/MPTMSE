@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Users, Calendar, Settings, LogOut, ChevronRight, Menu, X } from "lucide-react";
+import { Home, Users, Calendar, Settings, LogOut, ChevronRight, Menu, X, User, Wrench, MessageCircle } from "lucide-react";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useState } from "react";
 
@@ -44,6 +44,24 @@ const navigationItems = [
     icon: Calendar,
     label: "Attendance",
     description: "Apply for Attendance and Sick Leave schedule and events"
+  },
+  {
+    href: "/dashboard/profile",
+    icon: User,
+    label: "Profile",
+    description: "Manage your profile settings"
+  },
+  {
+    href: "/dashboard/tasks",
+    icon: Wrench,
+    label: "Tasks",
+    description: "Do your tasks and get feedback"
+  },
+  {
+    href: "/dashboard/chat",
+    icon: MessageCircle,
+    label: "Chat",
+    description: "Chat with team members"
   }
   
 ];

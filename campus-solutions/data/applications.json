@@ -1,0 +1,5 @@
+[
+  { "id": "app-1", "studentId": "student-1", "taskId": "task-1", "motivation": "I have extensive experience with Python and Pandas from previous projects.", "submittedAt": "2025-09-28T10:00:00Z", "status": "pending" },
+  { "id": "app-2", "studentId": "student-1", "taskId": "task-10", "motivation": "I have an AWS Certified Cloud Practitioner certification and am eager to apply my skills.", "submittedAt": "2025-09-29T11:00:00Z", "status": "pending" },
+  { "id": "app-3", "studentId": "student-1", "taskId": "task-12", "motivation": "I enjoy technical writing and have maintained a personal blog on web development.", "submittedAt": "2025-09-30T12:00:00Z", "status": "pending" }
+]
