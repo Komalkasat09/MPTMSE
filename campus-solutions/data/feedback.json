@@ -1,0 +1,22 @@
+[
+  {
+    "id": "feedback-1",
+    "studentId": "student-1",
+    "targetId": "committee-tech",
+    "targetType": "committee",
+    "rating": 5,
+    "comment": "The Tech Club's workshops are incredibly well-organized and informative. The session on Next.js was a game-changer for my project!",
+    "isAnonymous": false,
+    "submittedAt": "2025-10-20T14:00:00Z"
+  },
+  {
+    "id": "feedback-2",
+    "studentId": "student-2",
+    "targetId": "faculty-1",
+    "targetType": "faculty",
+    "rating": 4,
+    "comment": "Dr. Mehta's Data Structures course is challenging but very rewarding. Could be improved with a few more practical examples.",
+    "isAnonymous": true,
+    "submittedAt": "2025-10-21T11:00:00Z"
+  }
+]

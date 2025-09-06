@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Users, Calendar, Settings, LogOut, ChevronRight, Menu, X, User, Wrench, MessageCircle, TrophyIcon } from "lucide-react";
+import { Home, Users, Calendar, Settings, LogOut, ChevronRight, Menu, X, User, Wrench, MessageCircle, TrophyIcon, MessageSquareQuote } from "lucide-react";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useState } from "react";
 
@@ -62,6 +62,12 @@ const navigationItems = [
     icon: TrophyIcon,
     label: "Achievements",
     description: "View accomplishments and milestones"
+  },
+  {
+    href: "/dashboard/feedback",
+    icon: MessageSquareQuote,
+    label: "Feedback",
+    description: "Submit feedback and reviews"
   }
 ];
 

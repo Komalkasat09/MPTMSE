@@ -9,6 +9,7 @@ import initialSickLeaves from '../data/sickLeaves.json';
 import initialChannels from '../data/channels.json';
 import initialMessages from '../data/messages.json';
 import initialAchievements from '../data/achievements.json';
+import initialFeedback from '../data/feedback.json';
 
 
 const getFromStorage = (key: string, initialData: any[]) => {
@@ -294,4 +295,39 @@ sendMessage: (messageData:
         }, 600);
       });
     },
+// Add these two new functions inside the `api` object in /lib/mockApi.ts
+
+getFeedbackTargets: (): Promise<{ committees: any[], faculty: any[] }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const committees = getFromStorage('committees', initialCommittees);
+      const users = getFromStorage('users', initialUsers);
+      const faculty = users.filter((user: any) => user.role === 'faculty');
+      resolve({ committees, faculty });
+    }, 400);
+  });
+},
+
+submitFeedback: (feedbackData: {
+  studentId: string;
+  targetId: string;
+  targetType: 'committee' | 'faculty';
+  rating: number;
+  comment: string;
+  isAnonymous: boolean;
+}): Promise<{ success: boolean; message: string }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const feedback = getFromStorage('feedback', initialFeedback);
+      const newFeedback = {
+        id: `feedback-${Date.now()}`,
+        ...feedbackData,
+        submittedAt: new Date().toISOString(),
+      };
+      feedback.push(newFeedback);
+      saveToStorage('feedback', feedback);
+      resolve({ success: true, message: 'Thank you! Your feedback has been submitted.' });
+    }, 800);
+  });
+},
 };
