@@ -46,12 +46,6 @@ const navigationItems = [
     description: "Track attendance and leave requests"
   },
   {
-    href: "/dashboard/profile",
-    icon: User,
-    label: "Profile",
-    description: "Manage your profile settings"
-  },
-  {
     href: "/dashboard/tasks",
     icon: Wrench,
     label: "Tasks",
@@ -277,6 +271,12 @@ export default function DashboardLayout({
                     <DropdownMenuItem className="p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors">
                       <Settings className="mr-3 h-4 w-4" />
                       <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors">
+                      <Link href="/dashboard/profile">
+                        <User className="mr-3 h-4 w-4" />
+                        <span>Profile</span>
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem 
