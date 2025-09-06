@@ -4,7 +4,10 @@ import initialUsers from '../data/users.json';
 import initialTasks from '../data/tasks.json';
 import initialCommittees from '../data/committees.json';
 import initialEvents from '../data/events.json';
+import initialApplications from '../data/applications.json';
 import initialSickLeaves from '../data/sickLeaves.json';
+import initialChannels from '../data/channels.json';
+import initialMessages from '../data/messages.json';
 
 const getFromStorage = (key: string, initialData: any[]) => {
   if (typeof window === 'undefined') return initialData;
@@ -25,7 +28,7 @@ export const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         const users = getFromStorage('users', initialUsers);
-        const user = users.find((u: { email: string; password: string; }) => u.email === email && u.password === password);
+        const user = users.find((u: any) => u.email === email && u.password === password);
         if (user) resolve({ success: true, user, message: 'Login successful!' });
         else resolve({ success: false, message: 'Invalid email or password.' });
       }, 500);
@@ -35,7 +38,7 @@ export const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         let users = getFromStorage('users', initialUsers);
-        if (users.find((u: { email: any; sapId: any; }) => u.email === studentData.email || u.sapId === studentData.sapId)) {
+        if (users.find((u: any) => u.email === studentData.email || u.sapId === studentData.sapId)) {
           return resolve({ success: false, message: 'A user with that Email or SAP ID already exists.' });
         }
         const newUser = { id: `student-${Date.now()}`, role: 'student', ...studentData };
@@ -49,7 +52,7 @@ export const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         let users = getFromStorage('users', initialUsers);
-        if (users.find((u: { email: any; }) => u.email === facultyData.email)) {
+        if (users.find((u: any) => u.email === facultyData.email)) {
           return resolve({ success: false, message: 'A user with that Email already exists.' });
         }
         const newUser = { id: `faculty-${Date.now()}`, role: 'faculty', ...facultyData };
@@ -63,7 +66,7 @@ export const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         let users = getFromStorage('users', initialUsers);
-        if (users.find((u: { email: any; }) => u.email === committeeData.email)) {
+        if (users.find((u: any) => u.email === committeeData.email)) {
           return resolve({ success: false, message: 'A committee with that Email already exists.' });
         }
         const newUser = { id: `committee-${Date.now()}`, role: 'committee', ...committeeData };
@@ -73,13 +76,70 @@ export const api = {
       }, 500);
     });
   },
+  getStudentAttendance: (studentId: string): Promise<any[]> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const sickLeaves = getFromStorage('sickLeaves', initialSickLeaves);
+        const studentRecords = sickLeaves.filter((leave: any) => leave.studentId === studentId);
+        resolve(studentRecords);
+      }, 500);
+    });
+  },
+  submitSickLeave: (leaveData: { studentId: string; startDate: string; endDate: string; reason: string; }): Promise<{ success: boolean; message: string }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const sickLeaves = getFromStorage('sickLeaves', initialSickLeaves);
+        const newLeave = {
+          id: `sick-${Date.now()}`,
+          ...leaveData,
+          proofUrl: "/proof/simulated_upload.pdf",
+          status: 'pending',
+          facultyApproverId: 'faculty-1'
+        };
+        sickLeaves.push(newLeave);
+        saveToStorage('sickLeaves', sickLeaves);
+        resolve({ success: true, message: 'Sick leave submitted for approval.' });
+      }, 800);
+    });
+  },
+  getStudentProfile: (studentId: string): Promise<any | null> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const users = getFromStorage('users', initialUsers);
+        const profile = users.find((user: any) => user.id === studentId && user.role === 'student');
+        resolve(profile || null);
+      }, 300);
+    });
+  },
+  updateStudentProfile: (studentId: string, updatedData: any): Promise<{ success: boolean; message: string; user: any }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        let users = getFromStorage('users', initialUsers);
+        const userIndex = users.findIndex((user: any) => user.id === studentId);
+        if (userIndex === -1) {
+          return resolve({ success: false, message: 'User not found.', user: null });
+        }
+        users[userIndex] = { ...users[userIndex], ...updatedData };
+        saveToStorage('users', users);
+        const sessionUser = JSON.parse(localStorage.getItem('campus-user-session') || '{}');
+        if (sessionUser.id === studentId) {
+          localStorage.setItem('campus-user-session', JSON.stringify(users[userIndex]));
+        }
+        resolve({ success: true, message: 'Profile updated successfully!', user: users[userIndex] });
+      }, 800);
+    });
+  },
   getDashboardTasks: (): Promise<any[]> => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const tasks = getFromStorage('tasks', initialTasks);
             const users = getFromStorage('users', initialUsers);
-            const enrichedTasks = tasks.map((task: { postedBy: any; }) => {
-                const author = users.find((user: { id: any; }) => user.id === task.postedBy);
+            const committees = getFromStorage('committees', initialCommittees);
+            const enrichedTasks = tasks.map((task: any) => {
+                let author = users.find((user: any) => user.id === task.postedBy);
+                if (!author) {
+                  author = committees.find((committee: any) => committee.id === task.postedBy);
+                }
                 return {
                     ...task,
                     postedByName: author ? author.name : 'Unknown',
@@ -89,70 +149,91 @@ export const api = {
         }, 400);
     });
   },
+  getTasksForExplorer: (studentId: string): Promise<any[]> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+          const tasks = getFromStorage('tasks', initialTasks);
+          const users = getFromStorage('users', initialUsers);
+          const committees = getFromStorage('committees', initialCommittees);
+          const applications = getFromStorage('applications', initialApplications);
+          const enrichedTasks = tasks.map((task: any) => {
+              let author = users.find((user: any) => user.id === task.postedBy);
+              if (!author) {
+                author = committees.find((committee: any) => committee.id === task.postedBy);
+              }
+              const hasApplied = applications.some((app: any) => app.studentId === studentId && app.taskId === task.id);
+              return {
+                  ...task,
+                  postedByName: author ? author.name : 'Unknown',
+                  hasApplied: hasApplied,
+              };
+          });
+          resolve(enrichedTasks);
+      }, 500);
+    });
+  },
+  submitApplication: (appData: { studentId: string; taskId: string; motivation: string; useProfileResume: boolean; }): Promise<{ success: boolean; message: string }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+          const applications = getFromStorage('applications', initialApplications);
+          const existingApp = applications.find((app: any) => app.studentId === appData.studentId && app.taskId === appData.taskId);
+          if (existingApp) {
+            return resolve({ success: false, message: 'You have already applied for this task.' });
+          }
+          const newApp = {
+              id: `app-${Date.now()}`,
+              studentId: appData.studentId,
+              taskId: appData.taskId,
+              motivation: appData.motivation,
+              resumeSource: appData.useProfileResume ? 'profile' : 'manual_upload',
+              submittedAt: new Date().toISOString(),
+              status: 'pending'
+          };
+          applications.push(newApp);
+          saveToStorage('applications', applications);
+          resolve({ success: true, message: 'Application submitted successfully!' });
+      }, 800);
+    });
+  },
   getCommittees: (): Promise<any[]> => new Promise((resolve) => setTimeout(() => resolve(getFromStorage('committees', initialCommittees)), 300)),
   getEvents: (): Promise<any[]> => new Promise((resolve) => setTimeout(() => resolve(getFromStorage('events', initialEvents)), 300)),
-  getStudentAttendance: (studentId: string): Promise<any[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const sickLeaves = getFromStorage('sickLeaves', initialSickLeaves);
-      // In a real app, you'd also fetch approved event attendance
-      // For now, we'll just show sick leaves
-      const studentRecords = sickLeaves.filter((leave: { studentId: string; }) => leave.studentId === studentId);
-      resolve(studentRecords);
-    }, 500);
-  });
+  // Add these three new functions inside the `api` object in /lib/mockApi.ts
+
+getChatData: (userId: string): Promise<{ channels: any[], users: any[] }> => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const allChannels = getFromStorage('channels', initialChannels);
+            const allUsers = getFromStorage('users', initialUsers);
+            // For now, let's assume the user has access to all public/committee channels
+            // In a real app, this would be based on their memberships
+            resolve({ channels: allChannels, users: allUsers });
+        }, 400);
+    });
 },
 
-submitSickLeave: (leaveData: { studentId: string; startDate: string; endDate: string; reason: string; }): Promise<{ success: boolean; message: string }> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const sickLeaves = getFromStorage('sickLeaves', initialSickLeaves);
-      const newLeave = {
-        id: `sick-${Date.now()}`,
-        ...leaveData,
-        proofUrl: "/proof/simulated_upload.pdf", // Simulate file upload
-        status: 'pending',
-        facultyApproverId: 'faculty-1' // Simulate assigning to a default faculty
-      };
-      sickLeaves.push(newLeave);
-      saveToStorage('sickLeaves', sickLeaves);
-      resolve({ success: true, message: 'Sick leave submitted for approval.' });
-    }, 800);
-  });
+getMessagesForChannel: (channelId: string): Promise<any[]> => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const allMessages = getFromStorage('messages', initialMessages);
+            const channelMessages = allMessages.filter((m: any) => m.channelId === channelId);
+            resolve(channelMessages);
+        }, 200);
+    });
 },
 
-getStudentProfile: (studentId: string): Promise<any | null> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const users = getFromStorage('users', initialUsers);
-      const profile = users.find((user: { id: string; role: string; }) => user.id === studentId && user.role === 'student');
-      resolve(profile || null);
-    }, 300);
-  });
-},
-
-updateStudentProfile: (studentId: string, updatedData: any): Promise<{ success: boolean; message: string; user: any }> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      let users = getFromStorage('users', initialUsers);
-      const userIndex = users.findIndex((user: { id: string; }) => user.id === studentId);
-
-      if (userIndex === -1) {
-        return resolve({ success: false, message: 'User not found.', user: null });
-      }
-
-      // Update the user's data
-      users[userIndex] = { ...users[userIndex], ...updatedData };
-      saveToStorage('users', users);
-
-      // Also update the session storage if the current user is being edited
-      const sessionUser = JSON.parse(localStorage.getItem('campus-user-session') || '{}');
-      if (sessionUser.id === studentId) {
-        localStorage.setItem('campus-user-session', JSON.stringify(users[userIndex]));
-      }
-
-      resolve({ success: true, message: 'Profile updated successfully!', user: users[userIndex] });
-    }, 800);
-  });
+sendMessage: (messageData: { channelId: string; authorId: string; content: string }): Promise<{ success: boolean; message: any }> => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const messages = getFromStorage('messages', initialMessages);
+            const newMessage = {
+                id: `msg-${Date.now()}`,
+                ...messageData,
+                timestamp: new Date().toISOString()
+            };
+            messages.push(newMessage);
+            saveToStorage('messages', messages);
+            resolve({ success: true, message: newMessage });
+        }, 300); // Simulate network latency
+    });
 },
 };

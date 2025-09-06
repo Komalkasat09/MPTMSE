@@ -1,0 +1,10 @@
+[
+  { "id": "msg-1", "channelId": "channel-1", "authorId": "student-1", "content": "Hey everyone, is the library open late this weekend for exam prep?", "timestamp": "2025-10-15T10:00:00Z" },
+  { "id": "msg-2", "channelId": "channel-1", "authorId": "student-2", "content": "Yeah, I heard it's open until midnight on both Saturday and Sunday.", "timestamp": "2025-10-15T10:01:30Z" },
+  { "id": "msg-3", "channelId": "channel-2", "authorId": "committee-tech", "content": "📢 Heads up, everyone! Our first workshop on 'Intro to Next.js 15' is scheduled for next Friday. Sign-up link will be posted soon!", "timestamp": "2025-10-16T11:30:00Z" },
+  { "id": "msg-4", "channelId": "channel-3", "authorId": "committee-trinity", "content": "Looking for volunteers for the upcoming cultural fest! DM me if you're interested in helping out with stage management.", "timestamp": "2025-10-16T12:00:00Z" },
+  { "id": "msg-5", "channelId": "channel-1", "authorId": "faculty-1", "content": "A reminder to all third-year students: your project proposals are due by the end of this week.", "timestamp": "2025-10-17T09:00:00Z" },
+  { "id": "msg-6", "channelId": "dm-vidhi-kavish", "authorId": "student-1", "content": "Hey Kavish, did you manage to solve that tricky DSA problem from yesterday's lecture?", "timestamp": "2025-10-17T14:00:00Z" },
+  { "id": "msg-7", "channelId": "dm-vidhi-kavish", "authorId": "student-2", "content": "Not yet, I'm still stuck on the recursion part. Want to work on it together in the library later?", "timestamp": "2025-10-17T14:05:00Z" },
+  { "id": "msg-8", "channelId": "dm-vidhi-kavish", "authorId": "student-1", "content": "Sounds good! See you there around 4 PM.", "timestamp": "2025-10-17T14:06:00Z" }
+]

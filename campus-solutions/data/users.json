@@ -1,66 +1,16 @@
 [
   {
-    "id": "student-1",
-    "role": "student",
-    "name": "Vidhi Shah",
-    "sapId": "SAP123456",
-    "email": "vidhi@college.edu",
-    "password": "password123",
-    "branch": "Computer Science",
-    "year": 3,
-    "phone": "+91-9876543210",
-    "linkedin": "https://linkedin.com/in/vidhi",
-    "github": "https://github.com/vidhi",
-    "resumeUrl": "/resumes/vidhi_resume.pdf",
-    "bio": "Aspiring full-stack developer with a passion for AI and open-source projects.",
-    "interests": ["AI", "Web Dev", "Open Source"],
-    "skills": ["Python", "React", "Next.js", "TensorFlow"],
-    "achievements": [
-      { "type": "Hackathon", "title": "Won Smart India Hackathon 2024" },
-      { "type": "Internship", "title": "Summer Intern at Google" }
-    ],
-    "applications": ["task-1"],
-    "attendance": [
-      { "eventId": "event-1", "status": "approved" },
-      { "sickLeaveId": "sick-1", "status": "pending" }
-    ]
+    "id": "student-1", "role": "student", "name": "Vidhi Shah", "sapId": "SAP123456", "email": "vidhi@college.edu", "password": "password123", "branch": "Computer Science", "year": 3, "phone": "+91-9876543210", "linkedin": "https://linkedin.com/in/vidhi", "github": "https://github.com/vidhi", "resumeUrl": "/resumes/vidhi_resume.pdf", "bio": "Aspiring full-stack developer with a passion for AI and open-source projects.", "interests": ["AI", "Web Dev", "Open Source"], "skills": ["Python", "React", "Next.js", "TensorFlow"], "achievements": [ { "type": "Hackathon", "title": "Won Smart India Hackathon 2024" }, { "type": "Internship", "title": "Summer Intern at Google" } ], "applications": ["task-1"], "attendance": [ { "eventId": "event-1", "status": "approved" } ]
   },
   {
-    "id": "student-2",
-    "role": "student",
-    "name": "Kavish Shah",
-    "sapId": "SAP654321",
-    "email": "kavish@college.edu",
-    "password": "password123",
-    "branch": "Information Technology",
-    "year": 2,
-    "phone": "+91-9123456789",
-    "linkedin": "https://linkedin.com/in/kavish",
-    "github": "https://github.com/kavish",
-    "resumeUrl": null,
-    "bio": "Enthusiastic about competitive programming and backend systems.",
-    "interests": ["DSA", "Backend", "Cloud"],
-    "skills": ["C++", "Java", "Node.js", "AWS"],
-    "achievements": [],
-    "applications": [],
-    "attendance": []
+    "id": "student-2", "role": "student", "name": "Kavish Shah", "sapId": "SAP654321", "email": "kavish@college.edu", "password": "password123", "branch": "Information Technology", "year": 2, "phone": "+91-9123456789", "linkedin": "https://linkedin.com/in/kavish", "github": "https://github.com/kavish", "resumeUrl": null, "bio": "Enthusiastic about competitive programming and backend systems.", "interests": ["DSA", "Backend", "Cloud"], "skills": ["C++", "Java", "Node.js", "AWS"], "achievements": [], "applications": [], "attendance": []
   },
-  {
-    "id": "faculty-1",
-    "role": "faculty",
-    "name": "Dr. Mehta",
-    "email": "mehta@college.edu",
-    "password": "password123",
-    "branch": "Computer Science",
-    "designation": "Associate Professor"
-  },
-  {
-    "id": "committee-1",
-    "role": "committee",
-    "name": "Tech Club",
-    "email": "techclub@college.edu",
-    "password": "password123",
-    "branch": "Computer Science",
-    "description": "The official student-run technical society for Machine Learning, Web Development, and all things code."
-  }
+  { "id": "faculty-1", "role": "faculty", "name": "Dr. Mehta", "email": "mehta@college.edu", "password": "password123", "branch": "Computer Science", "designation": "Associate Professor" },
+  { "id": "faculty-2", "role": "faculty", "name": "Dr. Sinha", "email": "sinha@college.edu", "password": "password123", "branch": "Information Technology", "designation": "Professor" },
+  { "id": "faculty-3", "role": "faculty", "name": "Prof. Desai", "email": "desai@college.edu", "password": "password123", "branch": "Electronics", "designation": "Assistant Professor" },
+  { "id": "committee-tech", "role": "committee", "name": "Tech Club", "email": "techclub@college.edu", "password": "password123", "branch": "Computer Science", "description": "The official student-run technical society for Machine Learning, Web Development, and all things code." },
+  { "id": "committee-mpstme", "role": "committee", "name": "MPSTME Committee", "email": "mpstme@college.edu", "password": "password123", "branch": "All Branches", "description": "Official committee for MPSTME events, workshops, and student affairs." },
+  { "id": "committee-trinity", "role": "committee", "name": "Trinity Club", "email": "trinity@college.edu", "password": "password123", "branch": "All Branches", "description": "The cultural and social hub of the campus, organizing fests and events." },
+  { "id": "committee-ecell", "role": "committee", "name": "E-Cell", "email": "ecell@college.edu", "password": "password123", "branch": "All Branches", "description": "Fostering the spirit of innovation and entrepreneurship on campus." },
+  { "id": "committee-placement", "role": "committee", "name": "Placement Cell", "email": "placement@college.edu", "password": "password123", "branch": "All Branches", "description": "Facilitating internships and job placements for students." }
 ]
